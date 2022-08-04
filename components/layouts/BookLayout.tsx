@@ -1,22 +1,19 @@
 import React, { FC, ReactNode } from "react";
 import { Stack } from "@mui/material";
 
-import { Footer, Navbar, Search } from "../UI";
+import { Navbar } from "../UI";
 
-interface HomeProps {
+interface BookProps {
   children: ReactNode;
 }
 
-export const HomeLayout: FC<HomeProps> = ({ children }) => {
+export const BookLayout: FC<BookProps> = ({ children }) => {
   return (
     <>
       <Stack gap={7} my={5}>
-        <Navbar />
-        <Search />
+        <Navbar showIcon />
 
         <main>{children}</main>
-
-        <Footer />
       </Stack>
     </>
   );

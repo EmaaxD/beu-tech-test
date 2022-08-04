@@ -24,20 +24,31 @@ export const lightTheme = createTheme({
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          border: "1px solid #BDBDBD",
-          borderRadius: 13,
-
           "& .MuiInputAdornment-root": {
             color: "#A3A3A3",
           },
+          "&.Mui-focused": {
+            "& .MuiOutlinedInput-notchedOutline": {
+              borderColor: "#DEC700",
+              boxShadow: "none",
+            },
+          },
           "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#0000003b !important",
-            borderWidth: "1px !important",
-            boxShadow: "none !important",
+            borderColor: "#BDBDBD",
+            borderRadius: 12,
+            boxShadow: "none",
           },
           "& ::placeholder": {
-            fontSize: 23,
+            fontSize: 18,
           },
+        },
+      },
+    },
+    MuiDivider: {
+      styleOverrides: {
+        root: {
+          borderBottomWidth: 2,
+          borderColor: "#d9d9d9",
         },
       },
     },
