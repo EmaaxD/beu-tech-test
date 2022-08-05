@@ -45,7 +45,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     `/volumes?q=react&key=${googleApiKey}&maxResults=10`
   );
 
-  console.log("book.volumeInfo", book.volumeInfo);
+  console.log("items[0].volumeInfo", items[0].volumeInfo);
 
   const books: BookDataProps[] = items.map((book) => ({
     id: book.id,
