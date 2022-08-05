@@ -52,5 +52,12 @@ export const lightTheme = createTheme({
         },
       },
     },
+    MuiRating: {
+      styleOverrides: {
+        root: {
+          color: "#DEC700",
+        },
+      },
+    },
   },
 });

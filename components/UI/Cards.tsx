@@ -65,6 +65,7 @@ export const BookCard: FC<BookCardProps> = ({
           value={4}
           size={bookSM ? "small" : "medium"}
           readOnly
+          color="#DEC700 !important"
         />
 
         <Stack alignItems="center" spacing={-0.3} textAlign="center">

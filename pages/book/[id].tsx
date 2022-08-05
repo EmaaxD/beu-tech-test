@@ -1,11 +1,21 @@
 import { useEffect, useState } from "react";
-import { NextPage, GetServerSideProps } from "next";
+import {
+  NextPage,
+  GetServerSideProps,
+  GetStaticPaths,
+  GetStaticProps,
+} from "next";
 import { useRouter } from "next/router";
 import { Box, Divider } from "@mui/material";
 
-import { clientAxios, googleApiKey } from "../../config";
+import { clientAxios, googleApiKey, limitResponseApi } from "../../config";
 
-import { BookDataProps, Item, ReviewsLS } from "../../interfaces";
+import {
+  BookDataProps,
+  Item,
+  ResponseGoogleApi,
+  ReviewsLS,
+} from "../../interfaces";
 
 import { BookLayout } from "../../components/layouts";
 import {
@@ -42,7 +52,7 @@ const BookPage: NextPage<Props> = ({ book }) => {
     <>
       <BookLayout>
         <MainContainer>
-          <BookCard {...book} fullInfo />
+          <BookCard {...book} fullInfo bookSM />
 
           <Box my={5}>
             <Divider />
@@ -62,8 +72,28 @@ const BookPage: NextPage<Props> = ({ book }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { id }: any = ctx.params;
+/** WHIT Static Side Generation and Incremental Static Regeneration **/
+
+export const getStaticPaths: GetStaticPaths = async (ctx) => {
+  const {
+    data: { items },
+  } = await clientAxios.get<ResponseGoogleApi>(
+    `/volumes?q=js&key=${googleApiKey}&maxResults=${limitResponseApi}`
+  );
+
+  return {
+    paths: items.map((book) => ({
+      params: {
+        id: book.id,
+      },
+    })),
+    // enable ISR
+    fallback: "blocking",
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const { id } = params as { id: string };
 
   const { data } = await clientAxios.get<Item>(
     `/volumes/${id}?key=${googleApiKey}`
@@ -72,7 +102,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const book: BookDataProps = {
     id: data.id,
     title: data.volumeInfo.title,
-    authors: data.volumeInfo.authors[0],
+    authors:
+      typeof data.volumeInfo.authors !== "undefined"
+        ? data.volumeInfo.authors[0]
+        : "Anonymous",
     image: data.volumeInfo.imageLinks.thumbnail,
     description: data.volumeInfo.description,
   };
@@ -83,5 +116,32 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     },
   };
 };
+
+/** WHIT Server Side Rendering **/
+
+// export const getServerSideProps: GetServerSideProps = async (ctx) => {
+//   const { id }: any = ctx.params;
+
+//   const { data } = await clientAxios.get<Item>(
+//     `/volumes/${id}?key=${googleApiKey}`
+//   );
+
+//   const book: BookDataProps = {
+//     id: data.id,
+//     title: data.volumeInfo.title,
+//     authors:
+//       typeof data.volumeInfo.authors !== "undefined"
+//         ? data.volumeInfo.authors[0]
+//         : "Anonymous",
+//     image: data.volumeInfo.imageLinks.thumbnail,
+//     description: data.volumeInfo.description,
+//   };
+
+//   return {
+//     props: {
+//       book,
+//     },
+//   };
+// };
 
 export default BookPage;
