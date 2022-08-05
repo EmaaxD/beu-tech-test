@@ -45,13 +45,13 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     `/volumes?q=react&key=${googleApiKey}&maxResults=10`
   );
 
-  console.log(`/volumes?q=react&key=${googleApiKey}&maxResults=10`);
+  console.log("book.volumeInfo", book.volumeInfo);
 
   const books: BookDataProps[] = items.map((book) => ({
     id: book.id,
     title: book.volumeInfo.title,
     authors: book.volumeInfo.authors[0],
-    image: book.volumeInfo.imageLinks.thumbnail,
+    image: book.volumeInfo.imageLinks?.thumbnail,
     description: book.volumeInfo.description,
   }));
 
