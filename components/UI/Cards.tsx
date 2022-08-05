@@ -1,30 +1,35 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useRouter } from "next/router";
-import { Stack, Box, Typography, Rating } from "@mui/material";
+import { Stack, Box, Typography, Rating, styled } from "@mui/material";
 import Image from "next/image";
 
+import { BookCardProps, Reviews } from "../../interfaces";
+
 import { MainIconButton } from "./Buttons";
+import { ModalDelete } from "./Modals";
 
-interface Props {
-  id: string | number;
-  image: string;
-  title: string;
-  author: string;
-  score: number;
-  noDescription?: boolean;
-  description: string;
-  bookSM?: boolean;
-}
+import { getLengthString } from "../../utils";
 
-export const BookCard: FC<Props> = ({
+const BookCardImage = styled(Box)(({ theme }) => ({
+  minHeight: 150,
+
+  "& img": {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    borderRadius: "19px",
+  },
+}));
+
+export const BookCard: FC<BookCardProps> = ({
   id,
-  image,
   title,
-  author,
-  score,
+  authors,
+  image,
   noDescription = false,
   description,
   bookSM = false,
+  fullInfo = false,
 }) => {
   const router = useRouter();
 
@@ -36,7 +41,7 @@ export const BookCard: FC<Props> = ({
         spacing={1}
         onClick={() => router.push(`/book/${id}`)}
       >
-        <Box
+        <BookCardImage
           width="100%"
           display="flex"
           justifyContent="center"
@@ -45,36 +50,47 @@ export const BookCard: FC<Props> = ({
         >
           <Image
             src={image}
-            width={450}
-            height={!noDescription ? 400 : 700}
+            width={!noDescription ? 163 : 450}
+            height={!noDescription ? 250 : 700}
             alt="book cover"
           />
-        </Box>
+        </BookCardImage>
 
         <Rating
           name="read-only"
-          value={score}
+          value={4}
           size={bookSM ? "small" : "medium"}
           readOnly
         />
 
         <Stack alignItems="center" spacing={-0.3} textAlign="center">
-          <Typography variant="body1" color="#9A9A9A" fontWeight={600}>
-            {title}
+          <Typography
+            variant="body1"
+            color="#9A9A9A"
+            fontSize={16}
+            fontWeight={600}
+          >
+            {fullInfo ? title : getLengthString(title)}
           </Typography>
           <Typography
             variant="body1"
             color="#000"
             textTransform="capitalize"
+            fontSize={15}
             fontStyle="italic"
           >
-            {author}
+            {fullInfo ? authors : getLengthString(authors, 16)}
           </Typography>
         </Stack>
 
         {!noDescription && (
           <Box sx={{ mt: "30px !important" }}>
-            <Typography variant="body1" fontWeight={600}>
+            <Typography
+              variant="body1"
+              fontSize="14px"
+              lineHeight="20px"
+              fontWeight={400}
+            >
               {description}
             </Typography>
           </Box>
@@ -84,13 +100,14 @@ export const BookCard: FC<Props> = ({
   );
 };
 
-export const ReviewCard: FC = () => {
+export const ReviewCard: FC<Reviews> = ({ id, comment, createdAt, user }) => {
+  const [openmodal, setOpenModal] = useState<boolean>(false);
+
   return (
     <>
       <Box display="flex" flexDirection="column" gap={2}>
         <Typography fontSize={14} fontWeight={400}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc, Lorem
-          ipsum dolor sit amet consectetur adipiscing elit.{" "}
+          {comment}
         </Typography>
 
         <Stack
@@ -105,20 +122,32 @@ export const ReviewCard: FC = () => {
             alignItems="center"
             spacing={0.3}
           >
-            <Typography variant="caption" fontWeight={700}>
-              Anonymous
+            <Typography
+              variant="caption"
+              fontWeight={700}
+              textTransform="capitalize"
+            >
+              {user}
             </Typography>
             <Typography color="#A5A5A2" fontSize={10}>
-              - Hace 1 min
+              - {createdAt}
             </Typography>
           </Stack>
 
           <Stack display="flex" direction="row" spacing={0.3}>
             <MainIconButton image="/icons/editicon.svg" />
-            <MainIconButton image="/icons/trashicon.svg" />
+            <MainIconButton
+              onHandleClick={() => setOpenModal((c) => !c)}
+              image="/icons/trashicon.svg"
+            />
           </Stack>
         </Stack>
       </Box>
+
+      <ModalDelete
+        open={openmodal}
+        onHandleClose={() => setOpenModal((c) => !c)}
+      />
     </>
   );
 };

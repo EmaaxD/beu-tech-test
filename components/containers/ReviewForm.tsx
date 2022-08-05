@@ -1,7 +1,8 @@
 import { FC, useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { Box, Stack } from "@mui/material";
 
-import { StateReviewForm } from "../../interfaces";
+import { Reviews, StateReviewForm } from "../../interfaces";
 
 import {
   ErrorAlert,
@@ -11,15 +12,19 @@ import {
   MainButton,
 } from "../UI";
 
-import { validationString } from "../../utils";
+import { getRandomId, reviewLS, validationString } from "../../utils";
 
 export const ReviewForm: FC = () => {
   const [form, setForm] = useState<StateReviewForm>({
-    username: "",
+    username: "Anonymous",
     review: "",
   });
   const [error, setError] = useState<string>("");
   const [disabledform, setDisabledform] = useState<boolean>(true);
+
+  const {
+    query: { id },
+  } = useRouter();
 
   const handleChange = ({ target }: any) =>
     setForm((c) => ({ ...c, [target.name]: target.value }));
@@ -33,7 +38,14 @@ export const ReviewForm: FC = () => {
       await validationString(username);
       await validationString(review);
 
-      // here send data LS
+      const data: Reviews = {
+        id: getRandomId(),
+        user: form.username,
+        comment: form.review,
+        createdAt: Date.now(),
+      };
+
+      await reviewLS(id, "insert", data);
     } catch (error: any) {
       console.log(error);
       setError(error?.message);

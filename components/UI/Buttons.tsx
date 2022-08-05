@@ -2,6 +2,12 @@ import { FC } from "react";
 import Image from "next/image";
 import { Button, IconButton, styled } from "@mui/material";
 
+import {
+  MainButtonProps,
+  MainIconProps,
+  ModalButtonProps,
+} from "../../interfaces";
+
 const MainCustomButton = styled(Button)(({ theme }) => ({
   backgroundColor: "#DEC700 !important",
   width: 120,
@@ -16,20 +22,20 @@ const MainCustomButton = styled(Button)(({ theme }) => ({
     color: "#090908",
   },
 }));
+const ModalCustomButton = styled(Button)(({ theme }) => ({
+  fontSize: 12,
+  padding: "9px 0px",
+  borderRadius: 8,
+  color: "#090908",
+  boxShadow: "none !important",
+  fontWeight: 600,
+}));
 
-interface Props {
-  type?: ButtonTypes;
-  text: string;
-  disabled: boolean;
-}
-
-interface MainIconProps {
-  image: string;
-}
-
-export type ButtonTypes = "button" | "submit" | "reset";
-
-export const MainButton: FC<Props> = ({ type = "button", text, disabled }) => {
+export const MainButton: FC<MainButtonProps> = ({
+  type = "button",
+  text,
+  disabled,
+}) => {
   return (
     <>
       <MainCustomButton
@@ -44,12 +50,37 @@ export const MainButton: FC<Props> = ({ type = "button", text, disabled }) => {
   );
 };
 
-export const MainIconButton: FC<MainIconProps> = ({ image }) => {
+export const MainIconButton: FC<MainIconProps> = ({ onHandleClick, image }) => {
   return (
     <>
-      <IconButton>
+      <IconButton onClick={onHandleClick}>
         <Image src={image} width={20} height={20} alt="icon main" />
       </IconButton>
+    </>
+  );
+};
+
+export const ModalButton: FC<ModalButtonProps> = ({
+  type = "button",
+  actions,
+  text,
+  onHandleClick,
+}) => {
+  return (
+    <>
+      <ModalCustomButton
+        type={type}
+        fullWidth
+        variant="contained"
+        size="small"
+        style={{
+          background: actions == "delete" ? "#DEC700" : "#595959",
+          color: actions == "delete" ? "#18191F" : "#FFFFEF",
+        }}
+        onClick={onHandleClick}
+      >
+        {text}
+      </ModalCustomButton>
     </>
   );
 };

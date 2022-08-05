@@ -12,3 +12,13 @@ export const validationString = (str: string) =>
 
     resolve(str.trim().toLowerCase());
   });
+
+export const getLengthString = (str: string, limit = 10) => {
+  let newString = str;
+
+  if (str.length > limit) {
+    newString = str.slice(0, limit);
+  }
+
+  return newString;
+};

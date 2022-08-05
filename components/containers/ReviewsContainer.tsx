@@ -1,18 +1,24 @@
 import { FC } from "react";
 import { Stack } from "@mui/material";
 
+import { ReviewsLS } from "../../interfaces";
+
 import { MainTitle } from "../UI";
 import { ReviewCard } from "../UI/Cards";
 
-export const ReviewsContainer: FC = () => {
+interface Props {
+  comments: ReviewsLS;
+}
+
+export const ReviewsContainer: FC<Props> = ({ comments }) => {
   return (
     <>
       <Stack mb={3}>
-        <MainTitle text="Reseña" />
+        <MainTitle text="Reseñas" />
 
         <Stack spacing={4} mt={3}>
-          {[1, 2, 3].map((item) => (
-            <ReviewCard key={item} />
+          {comments.comments.map((comment) => (
+            <ReviewCard key={comment.id} {...comment} />
           ))}
         </Stack>
       </Stack>
