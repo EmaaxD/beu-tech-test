@@ -55,6 +55,7 @@ export const BookCard: FC<BookCardProps> = ({
             src={image}
             width={!noDescription ? 163 : 450}
             height={!noDescription ? 250 : 700}
+            loading="lazy"
             alt="book cover"
           />
         </BookCardImage>

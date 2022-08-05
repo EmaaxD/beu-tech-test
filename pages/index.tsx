@@ -42,10 +42,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const {
     data: { items },
   } = await clientAxios.get<ResponseGoogleApi>(
-    `/volumes?q=react&key=${googleApiKey}&maxResults=10`
+    `/volumes?q=js&key=${googleApiKey}&maxResults=10`
   );
-
-  console.log("items[0].volumeInfo", items[0].volumeInfo);
 
   const books: BookDataProps[] = items.map((book) => ({
     id: book.id,
