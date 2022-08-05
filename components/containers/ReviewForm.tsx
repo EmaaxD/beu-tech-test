@@ -42,7 +42,7 @@ export const ReviewForm: FC = () => {
         id: getRandomId(),
         user: form.username,
         comment: form.review,
-        createdAt: Date.now(),
+        createdAt: new Date(),
       };
 
       await reviewLS(id, "insert", data);

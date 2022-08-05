@@ -2,7 +2,7 @@ export interface Reviews {
   id: string;
   user: string;
   comment: string;
-  createdAt: number;
+  createdAt: string | Date;
 }
 
 export interface ReviewsLS {

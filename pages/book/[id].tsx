@@ -66,7 +66,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { id }: any = ctx.params;
 
   const { data } = await clientAxios.get<Item>(
-    `/volumes/${id}?key=${googleApiKey}`
+    `https://www.googleapis.com/books/v1/volumes/${id}?key=AIzaSyAcU6Y5BsjnZEQdC2VhXStXsmd2ibm362g`
   );
 
   const book: BookDataProps = {

@@ -2,6 +2,8 @@ import { FC, useState } from "react";
 import { useRouter } from "next/router";
 import { Stack, Box, Typography, Rating, styled } from "@mui/material";
 import Image from "next/image";
+import Moment from "react-moment";
+import "moment/locale/es";
 
 import { BookCardProps, Reviews } from "../../interfaces";
 
@@ -38,6 +40,7 @@ export const BookCard: FC<BookCardProps> = ({
       <Stack
         flex={1}
         alignItems="center"
+        alignSelf="start"
         spacing={1}
         onClick={() => router.push(`/book/${id}`)}
       >
@@ -67,7 +70,7 @@ export const BookCard: FC<BookCardProps> = ({
           <Typography
             variant="body1"
             color="#9A9A9A"
-            fontSize={16}
+            fontSize={15}
             fontWeight={600}
           >
             {fullInfo ? title : getLengthString(title)}
@@ -76,7 +79,7 @@ export const BookCard: FC<BookCardProps> = ({
             variant="body1"
             color="#000"
             textTransform="capitalize"
-            fontSize={15}
+            fontSize={16}
             fontStyle="italic"
           >
             {fullInfo ? authors : getLengthString(authors, 16)}
@@ -130,7 +133,7 @@ export const ReviewCard: FC<Reviews> = ({ id, comment, createdAt, user }) => {
               {user}
             </Typography>
             <Typography color="#A5A5A2" fontSize={10}>
-              - {createdAt}
+              - <Moment fromNow>{createdAt}</Moment>
             </Typography>
           </Stack>
 

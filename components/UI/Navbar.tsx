@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { Stack, IconButton } from "@mui/material";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 
 import { MainContainer } from "../containers";
 
@@ -26,7 +26,7 @@ export const Navbar: FC<Props> = ({ showIcon }) => {
             />
           ) : (
             <IconButton size="small" onClick={() => router.push("/")}>
-              <ArrowBackIosNewIcon fontSize="small" />
+              <ArrowBackOutlinedIcon />
             </IconButton>
           )}
         </MainContainer>

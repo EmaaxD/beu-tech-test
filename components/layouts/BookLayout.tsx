@@ -10,7 +10,7 @@ interface BookProps {
 export const BookLayout: FC<BookProps> = ({ children }) => {
   return (
     <>
-      <Stack gap={7} my={5}>
+      <Stack gap={7} mt={2} mb={5}>
         <Navbar showIcon />
 
         <main>{children}</main>

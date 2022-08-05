@@ -42,7 +42,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const {
     data: { items },
   } = await clientAxios.get<ResponseGoogleApi>(
-    `/volumes?q=react&key=${googleApiKey}&maxResults=11`
+    `https://www.googleapis.com/books/v1/volumes?q=react&key=AIzaSyAcU6Y5BsjnZEQdC2VhXStXsmd2ibm362g&maxResults=11`
   );
 
   const books: BookDataProps[] = items.map((book) => ({
