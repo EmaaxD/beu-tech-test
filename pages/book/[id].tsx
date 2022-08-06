@@ -29,6 +29,7 @@ import {
 import { BookCard } from "../../components/UI/Cards";
 
 import { existReviews } from "../../utils";
+import { getBookById } from "../../services";
 
 interface Props {
   book: BookDataProps;
@@ -140,20 +141,7 @@ const BookPage: NextPage<Props> = ({ book }) => {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { id }: any = ctx.params;
 
-  const { data } = await clientAxios.get<Item>(
-    `/volumes/${id}?key=${googleApiKey}`
-  );
-
-  const book: BookDataProps = {
-    id: data.id,
-    title: data.volumeInfo.title,
-    authors:
-      typeof data.volumeInfo.authors !== "undefined"
-        ? data.volumeInfo.authors[0]
-        : "Anonymous",
-    image: data.volumeInfo.imageLinks.thumbnail,
-    description: data.volumeInfo.description,
-  };
+  const book = await getBookById(id);
 
   return {
     props: {

@@ -1,6 +1,6 @@
 import { clientAxios, googleApiKey, limitResponseApi } from "../config";
 
-import { BookDataProps, ResponseGoogleApi } from "../interfaces";
+import { BookDataProps, Item, ResponseGoogleApi } from "../interfaces";
 
 export const getBookByQuery = async (query: string) => {
   const {
@@ -24,4 +24,23 @@ export const getBookByQuery = async (query: string) => {
   }));
 
   return books;
+};
+
+export const getBookById = async (id: string) => {
+  const { data } = await clientAxios.get<Item>(
+    `/volumes/${id}?key=${googleApiKey}`
+  );
+
+  const book: BookDataProps = {
+    id: data.id,
+    title: data.volumeInfo.title,
+    authors:
+      typeof data.volumeInfo.authors !== "undefined"
+        ? data.volumeInfo.authors[0]
+        : "Anonymous",
+    image: data.volumeInfo.imageLinks.thumbnail,
+    description: data.volumeInfo.description,
+  };
+
+  return book;
 };

@@ -28,8 +28,6 @@ const Home: NextPage<Props> = ({ books }) => {
 
   useEffect(() => {
     (function () {
-      console.log("bookList", bookList);
-
       if (bookList.books.length === 1) {
         setBookList((c: any) => ({ books }));
       }
