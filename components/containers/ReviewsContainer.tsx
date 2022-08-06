@@ -40,6 +40,13 @@ export const ReviewsContainer: FC<Props> = ({ comments }) => {
 
     // removing comment in LS by idBook and idComment
     removeReview(reviewList.id, id);
+
+    setSelectReview((c) => ({
+      comment: "",
+      createdAt: "",
+      id: "",
+      user: "",
+    }));
   };
 
   return (

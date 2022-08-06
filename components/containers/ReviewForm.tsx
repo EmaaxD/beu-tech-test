@@ -57,7 +57,7 @@ export const ReviewForm: FC = () => {
 
         await reviewLS(id, "edit", data);
 
-        // set recoild state reviewList
+        // set recoil state reviewList
         setReviewList((c: any) => ({
           ...c,
           comments: c.comments.map((comment: Reviews) =>
@@ -114,13 +114,11 @@ export const ReviewForm: FC = () => {
 
   useEffect(() => {
     (function () {
-      if (selectReview.id !== "") {
-        setForm((c) => ({
-          ...c,
-          username: selectReview.user,
-          review: selectReview.comment,
-        }));
-      }
+      setForm((c) => ({
+        ...c,
+        username: selectReview.user,
+        review: selectReview.comment,
+      }));
     })();
   }, [selectReview]);
 

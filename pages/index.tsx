@@ -2,11 +2,9 @@ import { useEffect } from "react";
 import { NextPage, GetServerSideProps, GetStaticProps } from "next";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
-import { clientAxios, googleApiKey, limitResponseApi } from "../config";
-
 import { bookListState } from "../atoms";
 
-import { BookCardProps, BookDataProps, ResponseGoogleApi } from "../interfaces";
+import { BookCardProps, BookDataProps } from "../interfaces";
 
 import { HomeLayout } from "../components/layouts";
 import {

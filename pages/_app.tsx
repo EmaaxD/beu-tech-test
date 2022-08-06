@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ThemeProvider theme={lightTheme}>
       <CssBaseline />
       {/* Start the state with recoil */}
-      <RecoilRoot>
+      <RecoilRoot override={false}>
         <Component {...pageProps} />
       </RecoilRoot>
     </ThemeProvider>
