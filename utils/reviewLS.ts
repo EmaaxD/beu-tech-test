@@ -1,6 +1,7 @@
+import { Cookie } from "@mui/icons-material";
 import { Reviews, ReviewsLS } from "../interfaces";
 
-type ActionsTypes = "insert" | "edit" | "delete";
+type ActionsTypes = "insert" | "edit";
 
 export const reviewLS = async (
   idBook: any,
@@ -36,19 +37,36 @@ export const reviewLS = async (
           : review
       );
     }
-
-    if (actions === "delete") {
-      reviews = reviews.filter((review) =>
-        review.id === idBook
-          ? review.comments.filter((comment) => comment.id !== data.id)
-          : review
-      );
-    }
   } else {
     reviews.push({ id: idBook, comments: [data] });
   }
 
   localStorage.setItem("reviews", JSON.stringify(reviews));
+};
+
+export const removeReview = (idBook: any, idReview: string) => {
+  if (typeof window === "undefined") return false;
+
+  let reviews: ReviewsLS[] = JSON.parse(
+    localStorage.getItem("reviews") || "[]"
+  );
+
+  const reviewFound = reviews.find((review) => review.id === idBook);
+
+  if (reviewFound) {
+    const newReviews = reviews.map((review) =>
+      review.id === idBook
+        ? {
+            ...review,
+            comments: review.comments.filter(
+              (comment) => comment.id !== idReview
+            ),
+          }
+        : review
+    );
+
+    localStorage.setItem("reviews", JSON.stringify(newReviews));
+  }
 };
 
 export const existReviews = (id: any): any => {

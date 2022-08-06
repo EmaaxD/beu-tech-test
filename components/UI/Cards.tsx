@@ -5,7 +5,7 @@ import Image from "next/image";
 import Moment from "react-moment";
 import "moment/locale/es";
 
-import { BookCardProps, Reviews } from "../../interfaces";
+import { BookCardProps, ReviewCardProps } from "../../interfaces";
 
 import { MainIconButton } from "./Buttons";
 import { ModalDelete } from "./Modals";
@@ -105,22 +105,39 @@ export const BookCard: FC<BookCardProps> = ({
   );
 };
 
-export const ReviewCard: FC<Reviews> = ({ id, comment, createdAt, user }) => {
+export const ReviewCard: FC<ReviewCardProps> = ({
+  id,
+  comment,
+  createdAt,
+  user,
+  onHandleReviewEdit,
+  onHandleDltReview,
+}) => {
   const [openmodal, setOpenModal] = useState<boolean>(false);
+
+  const handleDelete = () => {
+    onHandleDltReview(id);
+
+    // close modal
+    setOpenModal(false);
+  };
 
   return (
     <>
       <Box display="flex" flexDirection="column" gap={2}>
+        {/* comment by user UI */}
         <Typography fontSize={14} fontWeight={400}>
           {comment}
         </Typography>
 
+        {/* containers actions user */}
         <Stack
           display="flex"
           direction="row"
           justifyContent="space-between"
           alignItems="center"
         >
+          {/* info user by comment UI */}
           <Stack
             display="flex"
             direction="row"
@@ -139,8 +156,12 @@ export const ReviewCard: FC<Reviews> = ({ id, comment, createdAt, user }) => {
             </Typography>
           </Stack>
 
+          {/* actions user by comment UI */}
           <Stack display="flex" direction="row" spacing={0.3}>
-            <MainIconButton image="/icons/editicon.svg" />
+            <MainIconButton
+              onHandleClick={() => onHandleReviewEdit(id)}
+              image="/icons/editicon.svg"
+            />
             <MainIconButton
               onHandleClick={() => setOpenModal((c) => !c)}
               image="/icons/trashicon.svg"
@@ -151,6 +172,7 @@ export const ReviewCard: FC<Reviews> = ({ id, comment, createdAt, user }) => {
 
       <ModalDelete
         open={openmodal}
+        onHandleDelete={handleDelete}
         onHandleClose={() => setOpenModal((c) => !c)}
       />
     </>

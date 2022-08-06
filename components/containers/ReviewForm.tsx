@@ -1,6 +1,9 @@
 import { FC, useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Box, Stack } from "@mui/material";
+
+import { reviewListState, selectReviewState } from "../../atoms";
 
 import { Reviews, StateReviewForm } from "../../interfaces";
 
@@ -16,11 +19,17 @@ import { getRandomId, reviewLS, validationString } from "../../utils";
 
 export const ReviewForm: FC = () => {
   const [form, setForm] = useState<StateReviewForm>({
-    username: "Anonymous",
+    username: "",
     review: "",
   });
   const [error, setError] = useState<string>("");
   const [disabledform, setDisabledform] = useState<boolean>(true);
+
+  const selectReview = useRecoilValue<Reviews>(selectReviewState);
+
+  const setSelectReview = useSetRecoilState(selectReviewState);
+
+  const setReviewList = useSetRecoilState(reviewListState);
 
   const {
     query: { id },
@@ -35,17 +44,58 @@ export const ReviewForm: FC = () => {
     const { username, review } = form;
 
     try {
+      // validations to string
       await validationString(username);
       await validationString(review);
 
-      const data: Reviews = {
-        id: getRandomId(),
-        user: form.username,
-        comment: form.review,
-        createdAt: new Date(),
-      };
+      if (selectReview.id !== "") {
+        const data = {
+          ...selectReview,
+          user: form.username,
+          comment: form.review,
+        };
 
-      await reviewLS(id, "insert", data);
+        await reviewLS(id, "edit", data);
+
+        // set recoild state reviewList
+        setReviewList((c: any) => ({
+          ...c,
+          comments: c.comments.map((comment: Reviews) =>
+            comment.id === selectReview.id
+              ? { ...comment, user: form.username, comment: form.review }
+              : comment
+          ),
+        }));
+        setSelectReview((c) => ({
+          id: "",
+          comment: "",
+          createdAt: "",
+          user: "",
+        }));
+      } else {
+        // building review object to save
+        const data: Reviews = {
+          id: getRandomId(),
+          user: form.username,
+          comment: form.review,
+          createdAt: `${new Date()}`,
+        };
+
+        // save review object LS
+        await reviewLS(id, "insert", data);
+
+        // set recoild state reviewList
+        setReviewList((c: any) => ({
+          ...c,
+          comments: [...c.comments, data],
+        }));
+      }
+
+      // clean form
+      setForm({
+        username: "",
+        review: "",
+      });
     } catch (error: any) {
       console.log(error);
       setError(error?.message);
@@ -62,10 +112,26 @@ export const ReviewForm: FC = () => {
     })();
   }, [form]);
 
+  useEffect(() => {
+    (function () {
+      if (selectReview.id !== "") {
+        setForm((c) => ({
+          ...c,
+          username: selectReview.user,
+          review: selectReview.comment,
+        }));
+      }
+    })();
+  }, [selectReview]);
+
   return (
     <>
       <Stack spacing={3}>
-        <MainTitle text="Escribe una reseña" />
+        <MainTitle
+          text={`${
+            selectReview.id !== "" ? "Editar reseña" : "Escribe una reseña"
+          }`}
+        />
 
         {/* Init component review form */}
         <Box
@@ -96,7 +162,7 @@ export const ReviewForm: FC = () => {
             <Box display="flex" flexDirection="column" alignItems="end">
               <MainButton
                 type="submit"
-                text="Publicar"
+                text={`${selectReview.id !== "" ? "Guardar" : "Publicar"}`}
                 disabled={disabledform}
               />
             </Box>

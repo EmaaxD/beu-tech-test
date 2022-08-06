@@ -1,8 +1,12 @@
-import { NextPage, GetServerSideProps } from "next";
+import { useEffect } from "react";
+import { NextPage, GetServerSideProps, GetStaticProps } from "next";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 import { clientAxios, googleApiKey, limitResponseApi } from "../config";
 
-import { BookDataProps, ResponseGoogleApi } from "../interfaces";
+import { bookListState } from "../atoms";
+
+import { BookCardProps, BookDataProps, ResponseGoogleApi } from "../interfaces";
 
 import { HomeLayout } from "../components/layouts";
 import {
@@ -11,26 +15,49 @@ import {
   MainContainer,
 } from "../components/containers";
 import { BookCard } from "../components/UI/Cards";
+import { getBookByQuery } from "../services";
 
 interface Props {
   books: BookDataProps[];
 }
 
 const Home: NextPage<Props> = ({ books }) => {
+  const bookList = useRecoilValue(bookListState);
+
+  const setBookList = useSetRecoilState(bookListState);
+
+  useEffect(() => {
+    (function () {
+      console.log("bookList", bookList);
+
+      if (bookList.books.length === 1) {
+        setBookList((c: any) => ({ books }));
+      }
+    })();
+  }, [books, setBookList]);
+
   return (
     <>
       <HomeLayout>
         <MainContainer>
+          {/* the first two big books of the UI */}
           <MainBooksContainer>
-            {books.slice(0, 2).map((book: BookDataProps) => (
-              <BookCard key={book.id} {...book} noDescription />
-            ))}
+            {/* the book card */}
+            {bookList.books
+              .slice(0, 2)
+              .map((book: BookDataProps, index: any) => (
+                <BookCard key={index} {...book} noDescription />
+              ))}
           </MainBooksContainer>
 
+          {/* the remaining books of the UI */}
           <BooksContainer>
-            {books.slice(2, books.length).map((book: BookDataProps) => (
-              <BookCard key={book.id} {...book} bookSM noDescription />
-            ))}
+            {/* the book card */}
+            {bookList.books
+              .slice(2, books.length)
+              .map((book: BookDataProps, index: any) => (
+                <BookCard key={index} {...book} bookSM noDescription />
+              ))}
           </BooksContainer>
         </MainContainer>
       </HomeLayout>
@@ -38,43 +65,13 @@ const Home: NextPage<Props> = ({ books }) => {
   );
 };
 
-// You should use getStaticProps when:
-//- The data required to render the page is available at build time ahead of a user’s request.
-//- The data comes from a headless CMS.
-//- The data can be publicly cached (not user-specific).
-//- The page must be pre-rendered (for SEO) and be very fast — getStaticProps generates HTML and JSON files, both of which can be cached by a CDN for performance.
-import { GetStaticProps } from "next";
+/** WHIT Static Side Generation **/
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
-  const {
-    data: { items },
-  } = await clientAxios.get<ResponseGoogleApi>(
-    `/volumes?q=js&key=${googleApiKey}&maxResults=${limitResponseApi}`
-  );
-
-  const books: BookDataProps[] = items.map((book) => ({
-    id: book.id,
-    authors:
-      typeof book.volumeInfo.authors !== "undefined"
-        ? book.volumeInfo.authors[0]
-        : "Anonymous",
-    image: book.volumeInfo.imageLinks?.smallThumbnail,
-    description: book.volumeInfo.description,
-    title: book.volumeInfo.title,
-  }));
-
-  return {
-    props: {
-      books,
-    },
-  };
-};
-
-// export const getServerSideProps: GetServerSideProps = async (ctx) => {
+// export const getStaticProps: GetStaticProps = async (ctx) => {
 //   const {
 //     data: { items },
 //   } = await clientAxios.get<ResponseGoogleApi>(
-//     `/volumes?q=js&key=${googleApiKey}&maxResults=11`
+//     `/volumes?q=js&key=${googleApiKey}&maxResults=${limitResponseApi}`
 //   );
 
 //   const books: BookDataProps[] = items.map((book) => ({
@@ -94,5 +91,17 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 //     },
 //   };
 // };
+
+/** WHIT Server Side Rendering **/
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const books: BookCardProps[] = await getBookByQuery("react");
+
+  return {
+    props: {
+      books,
+    },
+  };
+};
 
 export default Home;

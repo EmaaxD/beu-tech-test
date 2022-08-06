@@ -4,10 +4,15 @@ import { MainButton, ModalButton } from "./Buttons";
 
 interface Props {
   open: boolean;
+  onHandleDelete: (value: any) => void;
   onHandleClose: (value: any) => void;
 }
 
-export const ModalDelete: FC<Props> = ({ open, onHandleClose }) => {
+export const ModalDelete: FC<Props> = ({
+  open,
+  onHandleDelete,
+  onHandleClose,
+}) => {
   const style = {
     position: "absolute",
     top: "50%",
@@ -50,7 +55,7 @@ export const ModalDelete: FC<Props> = ({ open, onHandleClose }) => {
               <ModalButton
                 actions="delete"
                 text="Eliminar"
-                onHandleClick={() => console.log("actions delete review")}
+                onHandleClick={onHandleDelete}
               />
               <ModalButton
                 actions="cancel"
