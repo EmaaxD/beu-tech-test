@@ -7,7 +7,7 @@ import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 
 import { selectReviewState } from "../../atoms";
 
-import { MainContainer } from "../containers";
+import { AnimationContainer, MainContainer } from "../containers";
 
 interface Props {
   showIcon?: boolean;
@@ -49,22 +49,24 @@ export const Navbar: FC<Props> = ({ showIcon }) => {
 
   return (
     <>
-      <Stack component="header">
-        <MainContainer>
-          {!showIcon ? (
-            <Image
-              src="/bookapp.svg"
-              width={180}
-              height={70}
-              alt="main logo app"
-            />
-          ) : (
-            <IconButton size="small" onClick={handleClickBack}>
-              <ArrowBackOutlinedIcon />
-            </IconButton>
-          )}
-        </MainContainer>
-      </Stack>
+      <AnimationContainer>
+        <Stack component="header">
+          <MainContainer>
+            {!showIcon ? (
+              <Image
+                src="/bookapp.svg"
+                width={180}
+                height={70}
+                alt="main logo app"
+              />
+            ) : (
+              <IconButton size="small" onClick={handleClickBack}>
+                <ArrowBackOutlinedIcon />
+              </IconButton>
+            )}
+          </MainContainer>
+        </Stack>
+      </AnimationContainer>
     </>
   );
 };

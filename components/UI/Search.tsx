@@ -12,7 +12,7 @@ import { bookListState } from "../../atoms";
 
 import { getBookByQuery } from "../../services";
 
-import { MainContainer } from "./../containers";
+import { AnimationContainer, MainContainer } from "./../containers";
 import { ErrorSearch } from "./Alerts";
 
 export const Search: FC = () => {
@@ -55,31 +55,33 @@ export const Search: FC = () => {
   return (
     <>
       <MainContainer>
-        <form onSubmit={handleSubmit}>
-          <FormControl fullWidth>
-            <OutlinedInput
-              id="search"
-              name="search"
-              value={search}
-              onChange={({ target }) => setSearch(target.value)}
-              startAdornment={
-                <InputAdornment position="start">
-                  <SearchOutlinedIcon fontSize="large" />
-                </InputAdornment>
-              }
-              endAdornment={
-                loading && (
+        <AnimationContainer>
+          <form onSubmit={handleSubmit}>
+            <FormControl fullWidth>
+              <OutlinedInput
+                id="search"
+                name="search"
+                value={search}
+                onChange={({ target }) => setSearch(target.value)}
+                startAdornment={
                   <InputAdornment position="start">
-                    <CircularProgress color="info" size={20} />
+                    <SearchOutlinedIcon fontSize="large" />
                   </InputAdornment>
-                )
-              }
-              disabled={loading ? true : false}
-              placeholder="Buscar libro"
-            />
-            <ErrorSearch error={error} />
-          </FormControl>
-        </form>
+                }
+                endAdornment={
+                  loading && (
+                    <InputAdornment position="start">
+                      <CircularProgress color="info" size={20} />
+                    </InputAdornment>
+                  )
+                }
+                disabled={loading ? true : false}
+                placeholder="Buscar libro"
+              />
+              <ErrorSearch error={error} />
+            </FormControl>
+          </form>
+        </AnimationContainer>
       </MainContainer>
     </>
   );

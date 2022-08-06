@@ -9,14 +9,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useRouter } from "next/router";
 import { Box, Divider } from "@mui/material";
 
-import { clientAxios, googleApiKey, limitResponseApi } from "../../config";
-
-import {
-  BookDataProps,
-  Item,
-  ResponseGoogleApi,
-  ReviewsLS,
-} from "../../interfaces";
+import { BookDataProps, ReviewsLS } from "../../interfaces";
 
 import { reviewListState } from "../../atoms";
 
@@ -29,6 +22,7 @@ import {
 import { BookCard } from "../../components/UI/Cards";
 
 import { existReviews } from "../../utils";
+
 import { getBookById } from "../../services";
 
 interface Props {

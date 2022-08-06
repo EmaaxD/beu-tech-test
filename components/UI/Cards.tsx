@@ -11,6 +11,7 @@ import { MainIconButton } from "./Buttons";
 import { ModalDelete } from "./Modals";
 
 import { getLengthString } from "../../utils";
+import { AnimationContainer } from "../containers";
 
 const BookCardImage = styled(Box)(({ theme }) => ({
   minHeight: 150,
@@ -36,7 +37,7 @@ export const BookCard: FC<BookCardProps> = ({
   const router = useRouter();
 
   return (
-    <>
+    <AnimationContainer>
       <Stack
         flex={1}
         alignItems="center"
@@ -101,7 +102,7 @@ export const BookCard: FC<BookCardProps> = ({
           </Box>
         )}
       </Stack>
-    </>
+    </AnimationContainer>
   );
 };
 
