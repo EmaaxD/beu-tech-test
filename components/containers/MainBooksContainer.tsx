@@ -8,7 +8,13 @@ interface Props {
 export const MainBooksContainer: FC<Props> = ({ children }) => {
   return (
     <>
-      <Stack display="flex" direction="row" alignItems="center" gap={3}>
+      <Stack
+        display="flex"
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        gap={3}
+      >
         {children}
       </Stack>
     </>

@@ -8,7 +8,7 @@ interface Props {
 export const MainContainer: FC<Props> = ({ children }) => {
   return (
     <>
-      <Container maxWidth="lg">{children}</Container>
+      <Container maxWidth="md">{children}</Container>
     </>
   );
 };

@@ -32,6 +32,7 @@ const Home: NextPage<Props> = ({ books }) => {
         setBookList((c: any) => ({ books }));
       }
     })();
+    // eslint-disable-next-line
   }, [books, setBookList]);
 
   return (
@@ -93,7 +94,7 @@ const Home: NextPage<Props> = ({ books }) => {
 /** WHIT Server Side Rendering **/
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const books: BookCardProps[] = await getBookByQuery("react");
+  const books: BookCardProps[] = await getBookByQuery("js");
 
   return {
     props: {

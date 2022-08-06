@@ -16,7 +16,7 @@ export const getBookByQuery = async (query: string) => {
         ? book.volumeInfo.authors[0]
         : "Anonymous",
     image:
-      typeof book.volumeInfo.imageLinks?.smallThumbnail !== "undefined"
+      book.volumeInfo.imageLinks?.smallThumbnail !== "undefined"
         ? book.volumeInfo.imageLinks?.smallThumbnail
         : "https://jackmoreno.files.wordpress.com/2014/04/cantar-del-mc3ado-cid.jpg?w=648",
     description: book.volumeInfo.description,

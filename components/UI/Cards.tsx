@@ -16,9 +16,14 @@ import { AnimationContainer } from "../containers";
 const BookCardImage = styled(Box)(({ theme }) => ({
   minHeight: 150,
 
+  "& > span": {
+    maxWidth: "60% !important",
+
+    [theme.breakpoints.down("md")]: {
+      maxWidth: "100% !important",
+    },
+  },
   "& img": {
-    width: "100%",
-    height: "100%",
     objectFit: "cover",
     borderRadius: "19px",
   },
@@ -52,13 +57,15 @@ export const BookCard: FC<BookCardProps> = ({
           alignItems="center"
           flex={1}
         >
-          <Image
-            src={image}
-            width={!noDescription ? 163 : 450}
-            height={!noDescription ? 250 : 700}
-            loading="lazy"
-            alt="book cover"
-          />
+          {image !== "" && (
+            <Image
+              src={image}
+              width={!noDescription ? 163 : 450}
+              height={!noDescription ? 250 : 700}
+              loading="lazy"
+              alt="book cover"
+            />
+          )}
         </BookCardImage>
 
         <Rating

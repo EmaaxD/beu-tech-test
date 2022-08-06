@@ -5,6 +5,7 @@ import {
   FormControl,
   InputAdornment,
   OutlinedInput,
+  styled,
 } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
@@ -14,6 +15,15 @@ import { getBookByQuery } from "../../services";
 
 import { AnimationContainer, MainContainer } from "./../containers";
 import { ErrorSearch } from "./Alerts";
+
+const SearchForm = styled("form")(({ theme }) => ({
+  // maxWidth: 800,
+  margin: "auto",
+
+  [theme.breakpoints.down("md")]: {
+    maxWidth: "100%",
+  },
+}));
 
 export const Search: FC = () => {
   const [search, setSearch] = useState<string>("");
@@ -50,13 +60,14 @@ export const Search: FC = () => {
 
   useEffect(() => {
     return () => clearTimeout(timer);
+    // eslint-disable-next-line
   }, []);
 
   return (
     <>
       <MainContainer>
         <AnimationContainer>
-          <form onSubmit={handleSubmit}>
+          <SearchForm onSubmit={handleSubmit}>
             <FormControl fullWidth>
               <OutlinedInput
                 id="search"
@@ -80,7 +91,7 @@ export const Search: FC = () => {
               />
               <ErrorSearch error={error} />
             </FormControl>
-          </form>
+          </SearchForm>
         </AnimationContainer>
       </MainContainer>
     </>
