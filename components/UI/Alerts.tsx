@@ -16,3 +16,11 @@ export const ErrorAlert: FC<Props> = ({ error }) => {
     </>
   );
 };
+
+export const ErrorSearch: FC<Props> = ({ error }) => {
+  return (
+    <Typography variant="body1" color="#ff1745d0" mt={1}>
+      {error}
+    </Typography>
+  );
+};
