@@ -16,8 +16,8 @@ export const getBookByQuery = async (query: string) => {
         ? book.volumeInfo.authors[0]
         : "Anonymous",
     image:
-      typeof book.volumeInfo.imageLinks?.thumbnail !== "undefined"
-        ? book.volumeInfo.imageLinks?.thumbnail
+      typeof book.volumeInfo.imageLinks?.smallThumbnail !== "undefined"
+        ? book.volumeInfo.imageLinks?.smallThumbnail
         : "https://jackmoreno.files.wordpress.com/2014/04/cantar-del-mc3ado-cid.jpg?w=648",
     description: book.volumeInfo.description,
     title: book.volumeInfo.title,
@@ -39,9 +39,8 @@ export const getBookById = async (id: string) => {
         ? data.volumeInfo.authors[0]
         : "Anonymous",
     image:
-      typeof data.volumeInfo.imageLinks.thumbnail !== "undefined"
-        ? data.volumeInfo.imageLinks.thumbnail
-        : "https://jackmoreno.files.wordpress.com/2014/04/cantar-del-mc3ado-cid.jpg?w=648",
+      data.volumeInfo.imageLinks?.thumbnail ||
+      "https://jackmoreno.files.wordpress.com/2014/04/cantar-del-mc3ado-cid.jpg?w=648",
     description: data.volumeInfo.description,
   };
 
