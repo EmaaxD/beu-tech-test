@@ -5,13 +5,12 @@ import Image from "next/image";
 import Moment from "react-moment";
 import "moment/locale/es";
 
-import { BookCardProps, ReviewCardProps } from "../../interfaces";
+import { BookCardProps, ReviewCardProps } from "@/interfaces/index";
 
-import { MainIconButton } from "./Buttons";
-import { ModalDelete } from "./Modals";
+import { AnimationContainer } from "@/components/containers/index";
+import { MainIconButton, ModalDelete } from "@/components/UI/index";
 
-import { getLengthString } from "../../utils";
-import { AnimationContainer } from "../containers";
+import { getLengthString } from "@/utils/index";
 
 const BookCardImage = styled(Box)(({ theme }) => ({
   minHeight: 150,
@@ -132,7 +131,7 @@ export const ReviewCard: FC<ReviewCardProps> = ({
 
   return (
     <>
-      <Box display="flex" flexDirection="column" gap={2}>
+      <Box display="flex" flexDirection="column" gap={1.2}>
         {/* comment by user UI */}
         <Typography fontSize={14} fontWeight={400}>
           {comment}

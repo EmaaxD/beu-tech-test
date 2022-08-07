@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { Backdrop, Box, Modal, Fade, Typography } from "@mui/material";
-import { MainButton, ModalButton } from "./Buttons";
+
+import { ModalButton } from "@/components/UI/index";
 
 interface Props {
   open: boolean;

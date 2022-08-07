@@ -6,3 +6,4 @@ export * from "./Alerts";
 export * from "./Buttons";
 export * from "./Titles";
 export * from "./Modals";
+export * from "./Cards";

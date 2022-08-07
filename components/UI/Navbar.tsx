@@ -5,9 +5,12 @@ import Image from "next/image";
 import { Stack, IconButton } from "@mui/material";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 
-import { selectReviewState } from "../../atoms";
+import { selectReviewState } from "@/atoms/index";
 
-import { AnimationContainer, MainContainer } from "../containers";
+import {
+  AnimationContainer,
+  MainContainer,
+} from "@/components/containers/index";
 
 interface Props {
   showIcon?: boolean;

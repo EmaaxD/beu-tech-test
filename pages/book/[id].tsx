@@ -1,37 +1,36 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   NextPage,
   GetServerSideProps,
-  GetStaticPaths,
-  GetStaticProps,
+  // GetStaticPaths,
+  // GetStaticProps,
 } from "next";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
 import { Box, Divider } from "@mui/material";
 
-import { BookDataProps, ReviewsLS } from "../../interfaces";
+import { BookDataProps, ReviewsLS } from "@/interfaces/index";
 
-import { reviewListState } from "../../atoms";
+import { reviewListState } from "@/atoms/index";
 
-import { BookLayout } from "../../components/layouts";
+import { BookLayout } from "@/components/layouts/index";
 import {
   MainContainer,
   ReviewForm,
   ReviewsContainer,
-} from "../../components/containers";
-import { BookCard } from "../../components/UI/Cards";
+} from "@/components/containers/index";
+import { BookCard } from "@/components/UI/index";
 
-import { existReviews } from "../../utils";
+import { existReviews } from "@/utils/index";
 
-import { getBookById } from "../../services";
+import { getBookById } from "@/services/index";
 
 interface Props {
   book: BookDataProps;
 }
 
 const BookPage: NextPage<Props> = ({ book }) => {
-  const reviewList = useRecoilValue<ReviewsLS>(reviewListState);
-  const setReviwList = useSetRecoilState(reviewListState);
+  const [reviewList, setReviwList] = useRecoilState(reviewListState);
 
   const {
     query: { id },

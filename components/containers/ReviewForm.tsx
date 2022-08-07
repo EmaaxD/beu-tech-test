@@ -1,6 +1,6 @@
 import { FC, useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { Box, Stack } from "@mui/material";
 
 import { reviewListState, selectReviewState } from "../../atoms";
@@ -25,9 +25,7 @@ export const ReviewForm: FC = () => {
   const [error, setError] = useState<string>("");
   const [disabledform, setDisabledform] = useState<boolean>(true);
 
-  const selectReview = useRecoilValue<Reviews>(selectReviewState);
-
-  const setSelectReview = useSetRecoilState(selectReviewState);
+  const [selectReview, setSelectReview] = useRecoilState(selectReviewState);
 
   const setReviewList = useSetRecoilState(reviewListState);
 

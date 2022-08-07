@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { Stack } from "@mui/material";
 
 import { reviewListState, selectReviewState } from "../../atoms";
@@ -16,14 +16,13 @@ interface Props {
 }
 
 export const ReviewsContainer: FC<Props> = ({ comments }) => {
-  const reviewList = useRecoilValue<ReviewsLS>(reviewListState);
-  const [reviewlist, setReviewList] = useRecoilState(reviewListState);
+  const [reviewList, setReviewList] = useRecoilState<any>(reviewListState);
 
   const setSelectReview = useSetRecoilState<Reviews>(selectReviewState);
 
   const handleReviewEdit = (id: string) => {
     const findComment = reviewList.comments.find(
-      (comment) => comment.id === id
+      (comment: Reviews) => comment.id === id
     );
 
     if (findComment) {
@@ -33,7 +32,7 @@ export const ReviewsContainer: FC<Props> = ({ comments }) => {
 
   const handleReviewDelete = (id: string) => {
     // setting state recoil
-    setReviewList((c) => ({
+    setReviewList((c: ReviewsLS) => ({
       ...c,
       comments: c.comments.filter((comment: Reviews) => comment.id !== id),
     }));

@@ -9,12 +9,15 @@ import {
 } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
-import { bookListState } from "../../atoms";
+import { bookListState } from "@/atoms/index";
 
-import { getBookByQuery } from "../../services";
+import { getBookByQuery } from "@/services/index";
 
-import { AnimationContainer, MainContainer } from "./../containers";
-import { ErrorSearch } from "./Alerts";
+import {
+  AnimationContainer,
+  MainContainer,
+} from "@/components/containers/index";
+import { ErrorSearch } from "@/components/UI/index";
 
 const SearchForm = styled("form")(({ theme }) => ({
   // maxWidth: 800,

@@ -1,7 +1,7 @@
 import React, { FC, ReactNode } from "react";
 import { Stack } from "@mui/material";
 
-import { Footer, Navbar, Search } from "../UI";
+import { Footer, Navbar, Search } from "@/components/UI/index";
 
 interface HomeProps {
   children: ReactNode;

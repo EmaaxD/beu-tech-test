@@ -2,9 +2,10 @@ import { Box, Stack } from "@mui/material";
 import { NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { MainContainer } from "../../components/containers";
 
-import { ModalButton } from "../../components/UI";
+import { MainContainer } from "@/components/containers/index";
+
+import { ModalButton } from "@/components/UI/index";
 
 const NotFoundPage: NextPage = () => {
   const router = useRouter();
@@ -22,8 +23,10 @@ const NotFoundPage: NextPage = () => {
             <Image
               src="https://www.pngkit.com/png/full/825-8254351_home-robot-broken.png"
               width={300}
-              height={300}
+              height={200}
               alt="logo not found"
+              objectFit="cover"
+              loading="lazy"
             />
           </Box>
 

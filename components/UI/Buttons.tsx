@@ -6,7 +6,7 @@ import {
   MainButtonProps,
   MainIconProps,
   ModalButtonProps,
-} from "../../interfaces";
+} from "@/interfaces/index";
 
 const MainCustomButton = styled(Button)(({ theme }) => ({
   backgroundColor: "#DEC700 !important",

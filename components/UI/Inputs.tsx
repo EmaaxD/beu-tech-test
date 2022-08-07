@@ -8,7 +8,7 @@ import {
   styled,
 } from "@mui/material";
 
-import { SimpleInputProps, SimpleTextareaProps } from "../../interfaces";
+import { SimpleInputProps, SimpleTextareaProps } from "@/interfaces/index";
 
 const CustomTextareaAutosize = styled(TextareaAutosize)(({}) => ({
   width: "100%",

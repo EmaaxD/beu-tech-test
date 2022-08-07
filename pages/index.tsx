@@ -1,28 +1,27 @@
 import { useEffect } from "react";
 import { NextPage, GetServerSideProps, GetStaticProps } from "next";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 
-import { bookListState } from "../atoms";
+import { bookListState } from "@/atoms/index";
 
-import { BookCardProps, BookDataProps } from "../interfaces";
+import { BookCardProps, BookDataProps } from "@/interfaces/index";
 
-import { HomeLayout } from "../components/layouts";
+import { getBookByQuery } from "@/services/index";
+
+import { HomeLayout } from "@/components/layouts/index";
 import {
   BooksContainer,
   MainBooksContainer,
   MainContainer,
-} from "../components/containers";
-import { BookCard } from "../components/UI/Cards";
-import { getBookByQuery } from "../services";
+} from "@/components/containers/index";
+import { BookCard } from "@/components/UI/index";
 
 interface Props {
   books: BookDataProps[];
 }
 
 const Home: NextPage<Props> = ({ books }) => {
-  const bookList = useRecoilValue(bookListState);
-
-  const setBookList = useSetRecoilState(bookListState);
+  const [bookList, setBookList] = useRecoilState(bookListState);
 
   useEffect(() => {
     (function () {
@@ -31,7 +30,7 @@ const Home: NextPage<Props> = ({ books }) => {
       }
     })();
     // eslint-disable-next-line
-  }, [books, setBookList]);
+  }, [books]);
 
   return (
     <>

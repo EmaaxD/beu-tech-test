@@ -1,7 +1,7 @@
 import React, { FC, ReactNode } from "react";
 import { Stack } from "@mui/material";
 
-import { Navbar } from "../UI";
+import { Navbar } from "@/components/UI/index";
 
 interface BookProps {
   children: ReactNode;

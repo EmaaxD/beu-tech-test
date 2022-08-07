@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { baseURL } from "./enviroment";
+import { baseURL } from "@/config/index";
 
 export const clientAxios = axios.create({
   baseURL: baseURL,
