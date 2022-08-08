@@ -8,7 +8,7 @@ interface Props {
 export const MainTitle: FC<Props> = ({ text }) => {
   return (
     <>
-      <Typography variant="h6" fontWeight={700}>
+      <Typography data-testid="title" variant="h6" fontWeight={700}>
         {text}
       </Typography>
     </>

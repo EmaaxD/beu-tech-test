@@ -8,7 +8,12 @@ interface Props {
 export const ErrorAlert: FC<Props> = ({ error }) => {
   return (
     <>
-      <Box bgcolor="#ff1745d0" py={1} borderRadius={2}>
+      <Box
+        data-testid="container-alert"
+        bgcolor="#ff1745d0"
+        py={1}
+        borderRadius={2}
+      >
         <Typography variant="body1" color="white" textAlign="center">
           {error}
         </Typography>

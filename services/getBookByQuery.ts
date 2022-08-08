@@ -19,7 +19,9 @@ export const getBookByQuery = async (query: string) => {
       typeof book.volumeInfo.imageLinks?.smallThumbnail !== "undefined"
         ? book.volumeInfo.imageLinks?.smallThumbnail
         : "https://jackmoreno.files.wordpress.com/2014/04/cantar-del-mc3ado-cid.jpg?w=648",
-    description: book.volumeInfo.description,
+    description:
+      book.volumeInfo.description ||
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum dolorum veritatis consequatur maiores! Reprehenderit, voluptate. Ipsum quisquam id alias, officia facere voluptate deleniti accusantium officiis, qui nemo dolor recusandae incidunt!",
     title: book.volumeInfo.title,
   }));
 
@@ -41,7 +43,9 @@ export const getBookById = async (id: string) => {
     image:
       data.volumeInfo.imageLinks?.thumbnail ||
       "https://jackmoreno.files.wordpress.com/2014/04/cantar-del-mc3ado-cid.jpg?w=648",
-    description: data.volumeInfo.description,
+    description:
+      data.volumeInfo.description ||
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum dolorum veritatis consequatur maiores! Reprehenderit, voluptate. Ipsum quisquam id alias, officia facere voluptate deleniti accusantium officiis, qui nemo dolor recusandae incidunt!",
   };
 
   return book;

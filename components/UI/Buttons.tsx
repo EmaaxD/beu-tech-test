@@ -39,6 +39,7 @@ export const MainButton: FC<MainButtonProps> = ({
   return (
     <>
       <MainCustomButton
+        data-testid="btn-send"
         type={type}
         variant="contained"
         size="small"

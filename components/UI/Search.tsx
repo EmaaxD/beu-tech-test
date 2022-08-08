@@ -73,6 +73,7 @@ export const Search: FC = () => {
           <SearchForm onSubmit={handleSubmit}>
             <FormControl fullWidth>
               <OutlinedInput
+                data-testid="input-search"
                 id="search"
                 name="search"
                 value={search}
@@ -94,6 +95,10 @@ export const Search: FC = () => {
               />
               <ErrorSearch error={error} />
             </FormControl>
+
+            <button type="submit" hidden data-testid="books-search">
+              send
+            </button>
           </SearchForm>
         </AnimationContainer>
       </MainContainer>

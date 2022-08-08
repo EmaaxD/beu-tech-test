@@ -58,6 +58,7 @@ export const BookCard: FC<BookCardProps> = ({
         >
           {image !== "" && (
             <Image
+              data-testid="card-image"
               src={image}
               width={!noDescription ? 163 : 450}
               height={!noDescription ? 250 : 700}
@@ -77,6 +78,7 @@ export const BookCard: FC<BookCardProps> = ({
 
         <Stack alignItems="center" spacing={-0.3} textAlign="center">
           <Typography
+            data-testid="card-title-book"
             variant="body1"
             color="#9A9A9A"
             fontSize={15}
@@ -85,6 +87,7 @@ export const BookCard: FC<BookCardProps> = ({
             {fullInfo ? title : getLengthString(title)}
           </Typography>
           <Typography
+            data-testid="card-author-book"
             variant="body1"
             color="#000"
             textTransform="capitalize"
@@ -98,6 +101,7 @@ export const BookCard: FC<BookCardProps> = ({
         {!noDescription && (
           <Box sx={{ mt: "30px !important" }}>
             <Typography
+              data-testid="card-desc-book"
               variant="body1"
               fontSize="14px"
               lineHeight="20px"

@@ -57,13 +57,18 @@ export const Navbar: FC<Props> = ({ showIcon }) => {
           <MainContainer>
             {!showIcon ? (
               <Image
+                data-testid="logo-app"
                 src="/bookapp.svg"
                 width={180}
                 height={70}
                 alt="main logo app"
               />
             ) : (
-              <IconButton size="small" onClick={handleClickBack}>
+              <IconButton
+                data-testid="back-to-app"
+                size="small"
+                onClick={handleClickBack}
+              >
                 <ArrowBackOutlinedIcon />
               </IconButton>
             )}

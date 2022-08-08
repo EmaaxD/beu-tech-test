@@ -45,6 +45,7 @@ export const SimpleInput: FC<SimpleInputProps> = ({
         </Typography>
         <FormControl size="small" fullWidth>
           <OutlinedInput
+            data-testid="username"
             id={name}
             name={name}
             value={value}
@@ -72,6 +73,7 @@ export const SimpleTextArea: FC<SimpleTextareaProps> = ({
           {title}
         </Typography>
         <CustomTextareaAutosize
+          data-testid="review"
           minRows={6}
           name={name}
           value={value}

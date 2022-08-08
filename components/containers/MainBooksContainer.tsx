@@ -9,6 +9,7 @@ export const MainBooksContainer: FC<Props> = ({ children }) => {
   return (
     <>
       <Stack
+        data-testid="container-main-imgs"
         display="flex"
         direction="row"
         justifyContent="center"
